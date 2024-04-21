@@ -25,7 +25,7 @@ function createElement(item) {
     alcoholic.textContent = item.strAlcoholic;
     const detailsBtn = document.createElement("a");
     detailsBtn.classList.add("btn", "btn-primary", "btn-details");
-    detailsBtn.href = `about.html/cocktail/${item.idDrink}`;
+    detailsBtn.href = `./about.html?${item.idDrink}`;
     detailsBtn.textContent = "Details";
     footer.appendChild(title);
     footer.appendChild(glass);
@@ -41,18 +41,16 @@ function getData() {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchTerm}`)
         .then((res) => res.json())
         .then((data) => {
-            cocktailsCenter.innerHTML = ""; 
+            cocktailsCenter.innerHTML = "";
             if (data.drinks) {
                 data.drinks.forEach((item) => {
-                    createElement(item); 
+                    createElement(item);
                 });
             } else {
-                cocktailsCenter.textContent = "Ma'lumot topilmadi"; 
+                cocktailsCenter.textContent = "Ma'lumot topilmadi";
             }
         })
         .catch((error) => {
             console.error("Ma'lumotlarni olishda xato:", error);
         });
 }
-
-// input.value = "a"
