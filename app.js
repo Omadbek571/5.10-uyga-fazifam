@@ -70,8 +70,7 @@ function getOneItem(id) {
             const newData = data?.drinks[0]
             section.innerHTML = `
             <a class="btn btn-primary" href="./index.html">back home</a>
-            <h2 class="section-title">${newData.strDrink}</h2>
-            `
+            <h2 class="section-title">${newData.strDrink}</h2>`
         })
         .catch((error) => {
             console.error("Ma'lumotlarni olishda xato:", error);
