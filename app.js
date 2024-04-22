@@ -1,5 +1,7 @@
 const cocktailsCenter = document.querySelector(".cocktails-center");
 const input = document.querySelector("#input");
+const section = document.querySelector('.section')
+const cocktailsContainer = document.querySelector('.cocktails-container')
 
 input.addEventListener("input", getData);
 
@@ -25,7 +27,9 @@ function createElement(item) {
     alcoholic.textContent = item.strAlcoholic;
     const detailsBtn = document.createElement("a");
     detailsBtn.classList.add("btn", "btn-primary", "btn-details");
-    detailsBtn.href = `./about.html?${item.idDrink}`;
+    detailsBtn.addEventListener('click', () => getOneItem(item.idDrink))
+    // detailsBtn.href = `./about.html?${item.idDrink}`;
+
     detailsBtn.textContent = "Details";
     footer.appendChild(title);
     footer.appendChild(glass);
@@ -37,7 +41,7 @@ function createElement(item) {
 }
 
 function getData() {
-    const searchTerm = input.value;
+    const searchTerm = input.value || "a";
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchTerm}`)
         .then((res) => res.json())
         .then((data) => {
@@ -54,3 +58,23 @@ function getData() {
             console.error("Ma'lumotlarni olishda xato:", error);
         });
 }
+
+getData()
+
+function getOneItem(id) {
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+            cocktailsContainer.style.display = 'none'
+            console.log(data?.drinks[0])
+            const newData = data?.drinks[0]
+            section.innerHTML = `
+            <a class="btn btn-primary" href="./index.html">back home</a>
+            <h2 class="section-title">${newData.strDrink}</h2>
+            `
+        })
+        .catch((error) => {
+            console.error("Ma'lumotlarni olishda xato:", error);
+        });
+}
+getOneItem()
